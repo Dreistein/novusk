@@ -6,9 +6,18 @@ use super::io::{io_init};
 use kerror::kerror;
 use userspace::required::START_USERSPACE;
 use crate::boot::boot::die;
-use cpu::x64::{look_for_amd, look_for_intel};
 use crate::kernel::st::st;
+use x86_64_thread::runner::Executor;
 
+
+#[cfg(target_arch = "x86_64")]
+pub unsafe fn x86_64_init() {
+    use x86_64_thread::x86_64_thread_init;
+
+    x86_64_thread_init();
+    kinfo!("x86_64 threading initialzed");
+    kinfo!("x86_64 drivers initialized");
+}
 
 #[no_mangle]
 pub unsafe extern "C" fn init() {
@@ -16,6 +25,9 @@ pub unsafe extern "C" fn init() {
         // TODO: Clear screen
         // screen::clear_screen(stdout);
     }
+
+    #[cfg(target_arch = "x86_64")]
+    x86_64_init();
 
     cpu_init();
     kinfo!("CPU initialized");

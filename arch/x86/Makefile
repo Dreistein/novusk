@@ -4,11 +4,11 @@ BOARD =?
 
 all:
 	@ echo "Compiling x86 Novusk"
-	@ cargo build --target targets/$(TARGET_ARCH)-novusk.json --features $(BOARD)_machine # -Z build-std=core -Z build-std-features=compiler-builtins-mem
+	@ cargo build --target targets/$(TARGET_ARCH)-novusk.json --features $(BOARD)
 
 image:
 	@ echo "Creating kernel images..."
-	@ novus_boot target/$(TARGET_ARCH)-novusk/debug/x86.efi
+	@ novus_boot target/$(TARGET_ARCH)-novusk/debug/x86.efi x86
 	@ cp -r target/$(TARGET_ARCH)-novusk/debug/x86.fat src/boot/bzImage
 	@ echo "Created bzImage at:"
 	@ echo "arch/x86/src/boot/bzImage"
