@@ -1,8 +1,3 @@
-pub mod boot;
-pub mod cpu;
-pub mod header;
-pub mod main;
+global_asm!(include_str!("header.S"));
 
-extern "C" {
-    pub(crate) fn init();
-}
+pub mod main;

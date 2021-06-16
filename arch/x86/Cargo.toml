@@ -1,60 +1,18 @@
 [package]
 name = "x86"
 version = "0.1.0"
-authors = ["Nathan McMillan <nathanmcmillan54@gmail.com>"]
 edition = "2018"
-
-[lib]
-name = "x86_novusk"
-path = "src/lib.rs"
-edition = "2018"
+description = "x86 family support for Novusk"
 
 [dependencies]
-# Dependencies
-libnu = "0.1.2"
-log = { version = "0.4.14", default-features = false }
-register = { version = "1.0.2", optional = true }
-rlibc = "1.0.0"
-uefi = "0.8.1"
-uefi-macros = "0.3.3"
-uefi-services = "0.5.1"
-# Drivers
-cpu = { path = "../../drivers/cpu/" }
-i686 = { path = "../../drivers/i686/" }
-gop = { path = "../../gpu/gop/" }
-uefi_kd = { path = "../../drivers/uefi_kd" }
-ps2_keyboard = { path = "../../drivers/firmware/input/ps2_keyboard/" }
-# Include
-ctypes = { path = "../../include/ctypes/" }
-time = { path = "../../include/time/" }
-novusk = { path = "../../include/novusk/" }
-# Kernel
 init = { path = "../../init/" }
-kerror = { path = "../../kernel/kerror/" }
-kinfo = { path = "../../kernel/kinfo/" }
-printk = { path = "../../kernel/printk/" }
-sys = { path = "../../kernel/sys/" }
-userspace = { path = "../../kernel/userspace/" }
-# Libraries
+libcolor = { path = "../../lib/libcolor/", features = ["uefi_colors", "vga_colors"] }
 libefi = { path = "../../lib/libefi/" }
-libn = { path = "../../lib/libn/" }
-# Modules
+macros = { path = "../../kernel/macros/" }
+spin = "0.5.2"
+vga = { path = "../../gpu/vga/" }
+volatile = "0.2.6"
 
-
-[dependencies.novusk_syscalls]
-version = "0.1.0"
-features = ["novusk_uefi"]
-
-[target.'cfg(target_arch = "x86_64")'.dependencies]
-ex1 = { path = "../../kernel/modules/ex1/" }
-raw-cpuid = "9.0.0"
-x86_64_thread = { path = "../../drivers/x86_64_thread/" }
-
-[dependencies.android]
-path = "../../drivers/android/"
-features = ["box"]
-
-[features]
-default = []
-default_machine = ["register"]
-android_box = ["register"]
+[dependencies.lazy_static]
+version = "1.0"
+features = ["spin_no_std"]

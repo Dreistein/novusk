@@ -1,10 +1,5 @@
 #![no_std]
 
-pub mod power;
+extern crate nkuefi;
 
-use core::ptr::NonNull;
-use uefi::table::{Boot, SystemTable};
-
-extern "C" {
-    pub fn st() -> NonNull<SystemTable<Boot>>;
-}
+pub mod write;

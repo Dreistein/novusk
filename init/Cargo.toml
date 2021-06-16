@@ -1,23 +1,9 @@
 [package]
 name = "init"
 version = "0.1.0"
-authors = ["Nathan McMillan <nathanmcmillan54@gmail.com>"]
 edition = "2018"
-
+description = "Novusk initialization"
 
 [dependencies]
-# Drivers
-fs = { path = "../drivers/fs/" }
 gpu = { path = "../drivers/gpu/" }
-input = { path = "../drivers/input/" }
-net = { path = "../drivers/net/" }
-# Include
-novusk = { path = "../include/novusk/" }
-# Kernel
-kinfo = { path = "../kernel/kinfo" }
-printk = { path = "../kernel/printk/" }
-# Memory Management
-allocmm = { path = "../mm/allocmm/" }
-initramfs = { path = "../mm/initramfs/" }
-# Modules
-m1 = { path = "../kernel/modules/m1/" }
+kernel = { path = "../kernel/" }

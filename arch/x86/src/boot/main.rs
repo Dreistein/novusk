@@ -1,16 +1,10 @@
-use crate::include::asm::hlt;
-use crate::kernel::{init, printk};
-use uefi::proto::console::text::Input;
-use uefi::table::{Boot, SystemTable};
+use crate::kernel::init::x86_kernel_init;
+use crate::kernel::printk::boot_method;
 
 #[no_mangle]
-pub extern "C" fn keyboard_init(stdin: *mut Input) {
+pub unsafe extern "C" fn main() -> ! {
+    crate::vga_write!("Starting kernel...");
+    crate::vga_write!("Boot method: {}", boot_method());
 
-}
-
-pub unsafe fn bmain() -> ! {
-    printk!("LICENCE:\nMIT License Copyright (c) 2021 Nathan McMillan");
-    printk!("   Read LICENCE for copyright");
-    init::init();
-    hlt()
+    x86_kernel_init();
 }

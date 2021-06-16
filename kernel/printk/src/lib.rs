@@ -1,22 +1,12 @@
 #![no_std]
 
-use core::fmt::{Arguments, Write};
-use core::ptr::NonNull;
-use uefi::prelude::{Boot, SystemTable};
+use core::fmt::Arguments;
 
 extern "C" {
-    fn printk_init() -> bool;
-    fn st() -> NonNull<SystemTable<Boot>>;
+    pub(crate) fn arch_printk(args: core::fmt::Arguments);
 }
 
-pub unsafe fn _printk(args: Arguments) {
-    if printk_init() {
-        let stdout = st().as_ref().stdout();
-        writeln!(stdout, "{}", args);
-    } else { return; }
+pub unsafe fn _printk(fmt: Arguments) {
+    arch_printk(format_args!("{}", fmt));
 }
 
-#[macro_export]
-macro_rules! printk {
-    ($($arg:tt)*) => {$crate::_printk(format_args!($($arg)*))};
-}
